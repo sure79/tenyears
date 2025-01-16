@@ -1,0 +1,1406 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>10년 운세 분석</title>
+  <!-- Chart.js 라이브러리 -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <style>
+    /* 기존 CSS에 추가/수정할 스타일 */
+/* 기본 리셋 및 글꼴 설정 */
+
+/* 기본 설정 */
+body {
+    font-family: 'Pretendard', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: #f0f2f5;
+    color: #333;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding: 20px;
+}
+
+/* 컨테이너 */
+.container {
+    max-width: 1000px;
+    width: 100%;
+    margin: 0 auto;
+    background: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+/* 헤더 */
+h1 {
+    font-size: 2.5rem;
+    color: #1a237e;
+    margin-bottom: 1em;
+    font-weight: 700;
+    text-align: center;
+    letter-spacing: -0.02em;
+}
+
+/* 설명 섹션 */
+.description {
+    background: #f8f9fa;
+    border-left: 4px solid #3498db;
+    padding: 20px;
+    margin: 30px 0;
+    border-radius: 0 8px 8px 0;
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+/* 입력 폼 */
+.input-section {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    margin-bottom: 40px;
+}
+
+.input-group {
+    display: flex;
+    gap: 15px;
+    align-items: flex-end;
+}
+
+.input-field {
+    flex: 1;
+    min-width: 100px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #2c3e50;
+}
+
+input {
+    width: 90%;
+    height: 50px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 0 15px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52,152,219,0.2);
+    outline: none;
+}
+
+button {
+    background: linear-gradient(135deg, #3498db, #2980b9);
+    color: white;
+    height: 50px;
+    padding: 0 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52,152,219,0.3);
+}
+
+/* 소셜 링크 */
+.social-links {
+    margin-top: 50px;
+    padding-top: 30px;
+    border-top: 1px solid #eee;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.social-links a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15px 30px;
+    border-radius: 10px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.social-link-shop {
+    background: #1a237e;
+    color: white;
+}
+
+.social-link-instagram {
+    background: linear-gradient(45deg, #405DE6, #5851DB, #833AB4, #C13584, #E1306C, #FD1D1D);
+    color: white;
+}
+
+.social-link-kakao {
+    background: #FEE500;
+    color: #000000;
+}
+
+.social-links a:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+    
+    .container {
+        padding: 20px;
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    .input-group {
+        flex-direction: column;
+    }
+    
+    .input-field {
+        width: 100%;
+    }
+    
+    button {
+        width: 100%;
+        margin-top: 10px;
+    }
+    
+    .social-links {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 20px;
+    }
+    
+    .social-links a {
+        width: 100%;
+    }
+}
+
+/* 다크 모드 */
+@media (prefers-color-scheme: dark) {
+    body {
+        background-color: #1a1a1a;
+        color: #fff;
+    }
+    
+    .container {
+        background: #242424;
+    }
+    
+    .description {
+        background: #2d2d2d;
+    }
+    
+    input {
+        background: #333;
+        border-color: #404040;
+        color: #fff;
+    }
+    
+    .social-links {
+        border-top-color: #333;
+    }
+}
+
+
+/* 차트 컨테이너 */
+.chart-container {
+    margin: 40px 0;
+    height: 500px;  /* 더 큰 차트 높이 */
+    padding: 20px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+/* 결과 그리드 스타일링 */
+.result-grid {
+    display: grid;
+    gap: 25px;
+    margin-top: 40px;
+}
+
+.result-item {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+}
+
+/* 결과 헤더 */
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+.result-header h3 {
+    font-size: 1.4rem;
+    color: #2c3e50;
+    margin: 0;
+}
+
+/* 점수 뱃지 스타일 */
+.score-badge {
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+.score-high {
+    background-color: #4caf50;
+    color: white;
+}
+
+.score-medium {
+    background-color: #ff9800;
+    color: white;
+}
+
+.score-low {
+    background-color: #f44336;
+    color: white;
+}
+
+/* 해석 섹션 */
+.interpretation {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 20px;
+}
+
+.interpretation h4 {
+    color: #1a237e;
+    margin-bottom: 15px;
+    font-size: 1.2rem;
+}
+
+/* 키포인트 리스트 */
+.key-points {
+    list-style: none;
+    padding: 0;
+    margin: 15px 0;
+}
+
+.key-points li {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #3498db;
+}
+
+/* 상세 정보 섹션 */
+.details-section {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.detail-item {
+    padding: 15px;
+    border-radius: 8px;
+}
+
+.detail-item.health {
+    background: #e8f5e9;
+    border-left: 4px solid #4caf50;
+}
+
+.detail-item.wealth {
+    background: #fff3e0;
+    border-left: 4px solid #ff9800;
+}
+
+.detail-item.relationship {
+    background: #e3f2fd;
+    border-left: 4px solid #2196f3;
+}
+
+/* 조언 섹션 */
+.advice {
+    margin-top: 20px;
+    padding: 15px;
+    background: #ede7f6;
+    border-radius: 8px;
+    border-left: 4px solid #673ab7;
+}
+
+/* 다크 모드 대응 */
+@media (prefers-color-scheme: dark) {
+    .result-item {
+        background: #2d2d2d;
+        border-color: #404040;
+    }
+
+    .interpretation {
+        background: #333;
+    }
+
+    .key-points li {
+        background: #2d2d2d;
+    }
+
+    .detail-item.health {
+        background: #1b5e20;
+        color: white;
+    }
+
+    .detail-item.wealth {
+        background: #e65100;
+        color: white;
+    }
+
+    .detail-item.relationship {
+        background: #0d47a1;
+        color: white;
+    }
+
+    .advice {
+        background: #4a148c;
+        color: white;
+    }
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>10년 해운 분석</h1>
+
+    <div class="description">
+      생년월일(월/일)을 입력하시면,<br>
+      <strong>2025년부터 2034년까지</strong> 당신의 10년운세를  분석해드립니다.<br>
+      그래프와 함께 상세한 해석을 보여드립니다.
+    </div>
+
+    <div class="input-section">
+      <form onsubmit="calculateFortune(event)">
+        <div class="input-group">
+          <div class="input-field">
+            <label for="month">월</label>
+            <input type="number" id="month" required min="1" max="12" placeholder="월">
+          </div>
+          <div class="input-field">
+            <label for="day">일</label>
+            <input type="number" id="day" required min="1" max="31" placeholder="일">
+          </div>
+          <button type="submit">분석하기</button>
+        </div>
+      </form>
+      <div id="error" class="error"></div>
+    </div>
+
+    <div class="chart-container">
+      <canvas id="fortuneChart"></canvas>
+    </div>
+
+    <div id="resultGrid" class="result-grid"></div>
+  </div>
+
+  <script>
+    /**********************************************************************
+     * 1) 해운 해석 사전 (haeunInterpretations)
+     *    - "fv/sv" 형태 키(예: "3/9")에 대한 제목/설명/키포인트/점수 저장
+     **********************************************************************/
+   // haeunInterpretations.js (예시)
+
+const haeunInterpretations = {
+  // ──────────────────────────────────────────
+  //  0/5 ~ 9/14
+  // ──────────────────────────────────────────
+  '0/5': {
+    title: '새로운 인간관계',
+    description: '인간관계의 흐름이 막 시작되는 시기입니다. 조금 서툴 수 있지만, 실천과 행동력이 중요합니다. 긍정적인 태도로 사람들을 대하면 새로운 인연이 열릴 것입니다.',
+    keyPoints: [
+      '수직관계(상사/부하 등)에서 좋은 기회',
+      '즉각적인 실행이 유리함',
+      '주변에서 의외의 도움을 받을 수 있음'
+    ],
+    score: 65,
+    details: {
+      health: '기초 체력 관리가 필요, 무리한 일정은 피하세요.',
+      wealth: '재물은 비교적 안정적이나, 과한 지출은 주의.',
+      relationship: '새로운 인연을 적극적으로 탐색해볼 것.'
+    }
+  },
+
+  '1/6': {
+    title: '인복과 발전',
+    description: '사람들에게 사랑받고, 인복이 크게 작용하는 시기입니다. 다만 소비나 지출이 늘어나기 쉬우니 주의가 필요합니다.',
+    keyPoints: [
+      '인맥 확장으로 도움을 얻음',
+      '소비 습관 점검 필요',
+      '감정 과잉 방지'
+    ],
+    score: 70,
+    details: {
+      health: '정신건강 관리에 집중, 스트레스 풀기.',
+      wealth: '지출이 많아질 수 있으니 예산 관리 필수.',
+      relationship: '좋은 인연이 찾아올 가능성 높음.'
+    }
+  },
+
+  '2/7': {
+    title: '기다림과 이동',
+    description: '외부 요인으로 인해 이동(이사, 직장 이동 등)이 생길 수 있는 시기입니다. 인내심을 갖고 흐름에 따르는 것이 좋습니다.',
+    keyPoints: [
+      '압박감(눌림)이 해소되면 보상이 따름',
+      '여러 일을 동시에 처리할 가능성',
+      '예견된 이동일수록 큰 충돌은 없음'
+    ],
+    score: 65,
+    details: {
+      health: '스트레스를 그때그때 해소해야 함.',
+      wealth: '안정적인 수입은 유지되지만 큰 변동은 적음.',
+      relationship: '사려 깊은 태도로 관계 형성 (신중 모드).'
+    }
+  },
+
+  '3/8': {
+    title: '만족과 인내',
+    description: '결과 자체는 긍정적이지만, 결과가 체감되는 데까지 시간이 걸릴 수 있습니다. 더디더라도 차근차근 진행하세요.',
+    keyPoints: [
+      '결과 자체는 만족스러움',
+      '인내심을 키우는 학습이 필요',
+      '체감 시점이 늦어 조바심 생길 수 있음'
+    ],
+    score: 75,
+    details: {
+      health: '기본 체력만 잘 유지하면 무난함.',
+      wealth: '꾸준히 저축/투자하면 점진적 이득.',
+      relationship: '안정적으로 관계가 유지됨.'
+    }
+  },
+
+  '4/9': {
+    title: '결정과 변화',
+    description: '내가 주체가 되어 큰 변화를 이끄는 시기입니다. 의욕이 넘치지만, 주변 의견도 어느 정도 수렴할 필요가 있습니다.',
+    keyPoints: [
+      '주도적 태도가 성과를 냄',
+      '적극적인 변화가 이점이 큼',
+      '실리를 최대한 고려할 것'
+    ],
+    score: 80,
+    details: {
+      health: '운동과 함께 스트레스 관리 필수.',
+      wealth: '투자 기회가 열릴 수 있으나 신중성도 필요.',
+      relationship: '주변 사람에게 영향력 행사 가능.'
+    }
+  },
+
+  '5/10': {
+    title: '인연과 운명',
+    description: '귀인을 만나고 도움을 받게 되는 시기입니다. 협력과 팀워크가 중요한 포인트가 됩니다.',
+    keyPoints: [
+      '귀인이 나타날 가능성 높음',
+      '인복 상승으로 협력 구하기 좋음',
+      '팀 프로젝트/콜라보에 최적'
+    ],
+    score: 75,
+    details: {
+      health: '스트레스가 쌓이면 적절히 해소할 것.',
+      wealth: '돈의 흐름이 좋아지지만, 과신은 금물.',
+      relationship: '귀인이나 멘토 등장으로 성장 기회.'
+    }
+  },
+
+  '6/11': {
+    title: '선택과 공정',
+    description: '다양한 선택지 앞에서 공정하고 정의로운 판단이 필요한 시기입니다. 균형감을 유지해야 합니다.',
+    keyPoints: [
+      '공정한 판단이 핵심',
+      '정의로운 선택을 요구받음',
+      '균형 잡힌 태도가 중요'
+    ],
+    score: 70,
+    details: {
+      health: '관절이나 근골격계 관리가 필요.',
+      wealth: '정당한 수익을 얻으려면 윤리적 태도 강조.',
+      relationship: '객관성과 공정성이 요구되는 관계.'
+    }
+  },
+
+  '7/12': {
+    title: '목적과 준비',
+    description: '더 높은 목표를 향해 준비해야 하는 시기입니다. 무리한 확장은 피하고, 차근차근 전략을 세우세요.',
+    keyPoints: [
+      '분명한 목적의식 필요',
+      '사전에 준비 많이 할수록 유리',
+      '때론 전략적 후퇴가 도움'
+    ],
+    score: 65,
+    details: {
+      health: '근육 통증이나 피로가 올 수 있으니 관리 필요.',
+      wealth: '준비 자금이 요구되며 지출이 임박할 수도.',
+      relationship: '전략적으로 관계를 조율하는 태도 필요.'
+    }
+  },
+
+  '8/13': {
+    title: '인내와 전환',
+    description: '인내심을 길러야 하고, 동시에 새로운 전환점이 찾아오는 시기입니다. 욕심보다는 착실함이 관건입니다.',
+    keyPoints: [
+      '인내심이 큰 자산이 됨',
+      '변화를 준비하는 자세 요구',
+      '시작은 다소 힘들 수 있음'
+    ],
+    score: 60,
+    details: {
+      health: '만성질환 혹은 체력 저하 주의.',
+      wealth: '장기 투자나 장기 목표에 집중.',
+      relationship: '안정적인 관계가 차근차근 쌓임.'
+    }
+  },
+
+  '9/14': {
+    title: '자연스러운 조화',
+    description: '모든 것이 자연스럽게 흘러가며, 무리하지 않아도 일정 성과를 볼 수 있는 시기입니다.',
+    keyPoints: [
+      '자연스러운 흐름을 믿기',
+      '균형과 조화 유지',
+      '무리한 욕심은 독이 됨'
+    ],
+    score: 70,
+    details: {
+      health: '자연 치유가 가능할 정도로 컨디션 안정.',
+      wealth: '안정된 흐름, 큰 변동 없을 듯.',
+      relationship: '원만한 협력과 관계 유지.'
+    }
+  },
+
+  // ──────────────────────────────────────────
+  //  0/6 ~ 9/15
+  // ──────────────────────────────────────────
+  '0/6': {
+    title: '새로운 인복',
+    description: '새로운 인연, 그리고 예상치 못한 기회들이 찾아올 수 있는 시기입니다. 다만 지출도 늘어날 수 있으니 주의가 필요합니다.',
+    keyPoints: [
+      '새로운 사람을 만날 가능성 높음',
+      '중요한 선택 앞에서 신중함 요구',
+      '과소비/충동구매 자제'
+    ],
+    score: 70,
+    details: {
+      health: '휴식과 컨디션 조절 필요.',
+      wealth: '소비 습관 개선 권장.',
+      relationship: '새로운 만남 속에서 적합한 파트너를 찾을 수 있음.'
+    }
+  },
+
+  '1/7': {
+    title: '발전과 이동',
+    description: '발전적인 변화, 그리고 이동(환경 변화, 직장 이직, 이사 등)이 있을 수 있는 시기입니다.',
+    keyPoints: [
+      '긍정적 변화를 추구',
+      '이동이나 이사에 적절한 타이밍',
+      '결과물(성과) 도출이 기대됨'
+    ],
+    score: 75,
+    details: {
+      health: '활동적 라이프스타일이 도움됨.',
+      wealth: '수입이 늘어날 가능성 있음.',
+      relationship: '교류가 활발해짐.'
+    }
+  },
+
+  '2/8': {
+    title: '기다림과 인내',
+    description: '예상보다 시간이 오래 걸리는 일들이 많을 수 있습니다. 급하게 서두르기보다는 시기를 기다리며 인내를 배우세요.',
+    keyPoints: [
+      '시기 조절이 핵심',
+      '인내심을 길러야 유리',
+      '결정은 신중하게'
+    ],
+    score: 65,
+    details: {
+      health: '만성질환 관리 중요.',
+      wealth: '저축이 힘이 됨.',
+      relationship: '차분하고 신중한 태도로 대인관계 유지.'
+    }
+  },
+
+  '3/9': {
+    title: '풍요와 변화',
+    description: '물질적 풍요로움과 함께 자연스러운 변화가 일어납니다. 주변에 도움을 주거나 나누는 태도가 운을 상승시킵니다.',
+    keyPoints: [
+      '물질적으로 여유로워짐',
+      '자연스러운 변화 수용',
+      '베품(나눔)이 새로운 기회가 됨'
+    ],
+    score: 80,
+    details: {
+      health: '영양 균형에 신경 쓰면 건강 향상.',
+      wealth: '풍요로운 재정 운, 투자를 고려해볼 수 있음.',
+      relationship: '원만한 관계로부터 이득이 큼.'
+    }
+  },
+
+  '4/10': {
+    title: '결정과 운명',
+    description: '중요한 결정이 운명적으로 다가올 수 있습니다. 결단력이 필요하며, 주저하면 기회를 놓칠 수도 있습니다.',
+    keyPoints: [
+      '결정 시점이 운명적 의미를 가짐',
+      '운명적 만남/사건 가능성',
+      '결단력 부족 시 기회 손실'
+    ],
+    score: 75,
+    details: {
+      health: '정신 건강 관리로 스트레스 줄일 것.',
+      wealth: '투자 기회가 생길 수 있으나 판단이 중요.',
+      relationship: '운명적인 만남 또는 파트너십.'
+    }
+  },
+
+  '5/11': {
+    title: '관계와 정의',
+    description: '인간관계에서 옳고 그름에 대한 고민이 생길 수 있는 시기입니다. 균형 잡힌 태도와 공정성을 강조하세요.',
+    keyPoints: [
+      '공정성과 정의감 필요',
+      '균형 잡힌 태도가 중요한 화두',
+      '윤리적·도덕적 기준 강조'
+    ],
+    score: 70,
+    details: {
+      health: '척추나 허리 관리 주의.',
+      wealth: '정당하게 벌고 바르게 쓰는 자세 필요.',
+      relationship: '공정한 관계가 신뢰를 키움.'
+    }
+  },
+
+  '6/12': {
+    title: '인복과 변화',
+    description: '주변 사람들로부터 도움을 받을 수 있지만, 동시에 상황 변동이 많아질 수 있습니다. 새 출발을 고민해볼 만합니다.',
+    keyPoints: [
+      '인연이 바뀌거나 새롭게 형성됨',
+      '새로운 시작을 고려할 수 있음',
+      '과도기적 불안감 대비'
+    ],
+    score: 65,
+    details: {
+      health: '정신 건강 관리(스트레스 대처)가 중요.',
+      wealth: '수입·지출 변동 폭이 있을 수 있음.',
+      relationship: '새로운 관계가 생길 수도, 기존 관계가 변할 수도 있음.'
+    }
+  },
+
+  '7/13': {
+    title: '이동과 전환',
+    description: '목적 있는 이동(프로젝트 변경, 직업 이동 등)과 함께 인생의 전환점이 올 수 있습니다. 큰 그림을 보고 움직이세요.',
+    keyPoints: [
+      '목적성을 분명히 해야 함',
+      '큰 변화(전환점) 가능성',
+      '새로운 시작에 대한 준비 필요'
+    ],
+    score: 75,
+    details: {
+      health: '체력 소모가 많아질 수 있으니 주의.',
+      wealth: '수입의 변화가 예상됨(증가 혹은 투자).',
+      relationship: '새로운 환경에 맞춰 새 관계 형성.'
+    }
+  },
+
+  '8/14': {
+    title: '인내와 조화',
+    description: '인내가 필요한 상황이 이어지지만, 그 과정을 통해 조화로운 성장이 기대됩니다. 급하지 않게 한 발씩.',
+    keyPoints: [
+      '인내심이 시기를 이끔',
+      '균형 잡힌 접근으로 발전',
+      '서두르지 않고 천천히'
+    ],
+    score: 70,
+    details: {
+      health: '꾸준한 운동과 생활 습관이 도움.',
+      wealth: '안정적 수입 구조 유지.',
+      relationship: '안정감을 주고받는 관계.'
+    }
+  },
+
+  '9/15': {
+    title: '변화와 욕망',
+    description: '변화의 물결 속에서 욕망(욕심)이 함께 생길 수 있는 시기입니다. 과도한 욕심을 경계하고 균형 잡힌 태도를 유지하세요.',
+    keyPoints: [
+      '변화를 수용하는 자세 필요',
+      '욕심 과하면 부작용',
+      '균형 감각 유지'
+    ],
+    score: 65,
+    details: {
+      health: '정신적 긴장도를 낮출 것.',
+      wealth: '욕심이 커지기 쉬워 지출 관리 필요.',
+      relationship: '관계에서 과도한 기대나 요구는 갈등 유발.'
+    }
+  },
+
+  // ──────────────────────────────────────────
+  //  0/7 ~ 9/16
+  // ──────────────────────────────────────────
+  '0/7': {
+    title: '새로운 모색',
+    description: '새로운 분야에 발을 들이거나, 더 넓은 시야로 기회를 탐색하는 시기입니다. 주변인들의 조언이 큰 도움이 될 수 있습니다.',
+    keyPoints: [
+      '낯선 분야를 시도',
+      '주위 지인/멘토 의견이 유효',
+      '도전을 즐기되 무리하지 말 것'
+    ],
+    score: 65,
+    details: {
+      health: '기초 체력 유지, 무리한 과로 금지.',
+      wealth: '안정적인 지출 관리, 성급한 투자 자제.',
+      relationship: '도움받을 인맥이 주변에 존재.'
+    }
+  },
+
+  '1/8': {
+    title: '발전과 인내',
+    description: '발전이 이루어지지만, 동시에 인내심이 요구됩니다. 꾸준한 노력과 차분함이 결국 결실을 맺을 것입니다.',
+    keyPoints: [
+      '꾸준한 성장 기회',
+      '인내심이 곧 성과로 이어짐',
+      '너무 서두르지 말기'
+    ],
+    score: 70,
+    details: {
+      health: '기초체력 관리가 성과에 직접 영향.',
+      wealth: '저축·투자에 신중하면 안정적 재정 확보.',
+      relationship: '안정적인 관계를 계속 유지하는 데 집중.'
+    }
+  },
+
+  '2/9': {
+    title: '기다림과 변화',
+    description: '때를 기다리되, 적절한 기회가 오면 자연스럽게 변화를 수용해야 하는 시기입니다. 인내심이 핵심 자산입니다.',
+    keyPoints: [
+      '인내심이 가장 중요한 무기',
+      '자연스럽게 다가오는 변화',
+      '억지로 상황을 바꾸기보다는 흐름에 따름'
+    ],
+    score: 70,
+    details: {
+      health: '정신 건강에 유의, 마음의 여유.',
+      wealth: '크게 흔들리지 않는 수준에서 안정적 수입.',
+      relationship: '무리하게 관계를 넓히기보다는 자연스러운 만남 추구.'
+    }
+  },
+
+  '3/10': {
+    title: '풍요와 운명',
+    description: '물질적 풍요뿐 아니라, 운명적인 사건이나 만남이 일어날 수 있는 시기입니다. 기회를 놓치지 않는 결단이 중요합니다.',
+    keyPoints: [
+      '물질적 풍요의 시기',
+      '운명적 사건 또는 만남 발생',
+      '결단력이 성패를 좌우'
+    ],
+    score: 85,
+    details: {
+      health: '전반적으로 건강 양호, 다만 과신 주의.',
+      wealth: '재물운 상승, 투자나 확장 고려 가능.',
+      relationship: '운명적인 관계가 맺어질 수도 있음.'
+    }
+  },
+
+  '4/11': {
+    title: '결정과 정의',
+    description: '중요한 결정을 내려야 하고, 그 결정이 공정함과 정의로움에 기초해야 좋은 결과를 얻습니다.',
+    keyPoints: [
+      '결정이 운명적 의미를 지닐 수 있음',
+      '공정하고 정의로운 판단 강조',
+      '균형 잡힌 시각 유지'
+    ],
+    score: 75,
+    details: {
+      health: '신경 계통 또는 머리/목 부위 주의.',
+      wealth: '정당한 수익 구조를 유지하면 안정됨.',
+      relationship: '공정성 덕분에 대인관계가 두터워질 수 있음.'
+    }
+  },
+
+  '5/12': {
+    title: '관계와 희생',
+    description: '인간관계에서 내가 조금 양보하거나 희생해야 할 일이 생길 수 있습니다. 갈등보다 협력을 택하면 장기적으로 이롭습니다.',
+    keyPoints: [
+      '관계에 있어 양보가 필요',
+      '희생을 통한 갈등 봉합 가능',
+      '기다림의 미덕'
+    ],
+    score: 65,
+    details: {
+      health: '심리적 피로가 누적될 수 있음, 휴식 필요.',
+      wealth: '지출이 갑자기 늘어날 수 있음.',
+      relationship: '관계 조정, 타협점을 찾는 시기.'
+    }
+  },
+
+  '6/13': {
+    title: '인복과 변화',
+    description: '인복이 있지만, 큰 변화가 함께 찾아와 혼란스러울 수 있습니다. 새로운 시작을 준비하거나 이전 단계를 마무리하세요.',
+    keyPoints: [
+      '귀인의 도움 받을 가능성 높음',
+      '큰 변화로 인해 갈림길에 서게 됨',
+      '새로운 출발을 고민'
+    ],
+    score: 70,
+    details: {
+      health: '면역력·체력 보강에 신경.',
+      wealth: '재물 흐름이 바뀔 수 있음 (증가/감소 모두 가능).',
+      relationship: '인연의 변화로 동료나 파트너가 바뀔 수 있음.'
+    }
+  },
+
+  '7/14': {
+    title: '이동과 조화',
+    description: '목적 있는 이동(직업, 거주지 등)과 함께 주변과 조화를 이루는 방법을 고민해야 하는 시기입니다.',
+    keyPoints: [
+      '의미 있는 이동이 운을 열어줌',
+      '조화로운 발전이 핵심',
+      '서로 다른 의견을 중재하는 능력 필요'
+    ],
+    score: 80,
+    details: {
+      health: '혈액순환이나 순환계 관리가 이롭다.',
+      wealth: '이동 비용이나 새 환경 대비 필요.',
+      relationship: '이동 후 새 인맥과 조화를 추구.'
+    }
+  },
+
+  '8/15': {
+    title: '인내와 극복',
+    description: '유혹이나 어려움을 이겨내야 하는 시기입니다. 인내심이 시험을 통과하는 열쇠가 될 것입니다.',
+    keyPoints: [
+      '유혹이나 시험이 있을 수 있음',
+      '인내심으로 극복 가능',
+      '자제력 훈련'
+    ],
+    score: 60,
+    details: {
+      health: '만성 질환을 조심, 스트레스 해소법 고민.',
+      wealth: '지출 충동 조절 필요.',
+      relationship: '신중한 태도로 갈등이나 위기를 피함.'
+    }
+  },
+
+  '9/16': {
+    title: '변화와 파괴',
+    description: '급격한 변화가 발생하거나, 기존 구조가 해체되는 시기일 수 있습니다. 재정비 후 새 출발이 요구됩니다.',
+    keyPoints: [
+      '필연적인 변화, 때론 파괴적으로 보임',
+      '기존 구조를 정리·청산',
+      '새로운 시작 준비'
+    ],
+    score: 55,
+    details: {
+      health: '사고나 부상 조심, 과로 금지.',
+      wealth: '재물 흐름의 큰 변동 가능 (손실/지출).',
+      relationship: '관계 정리가 필요하거나 단절이 생길 수 있음.'
+    }
+  },
+
+  // ──────────────────────────────────────────
+  //  0/8 ~ 9/17
+  // ──────────────────────────────────────────
+  '0/8': {
+    title: '새로운 인내',
+    description: '새로운 시작과 함께, 인내와 지속성이 특히 필요한 시기입니다. 속도보다는 탄탄함이 중요합니다.',
+    keyPoints: [
+      '초반에 시행착오가 있을 수 있음',
+      '인내를 통해 서서히 안정화',
+      '작은 성과를 모아 큰 결과로'
+    ],
+    score: 60,
+    details: {
+      health: '기초체력 관리와 규칙적 생활이 도움됨.',
+      wealth: '장기적 안목으로 재정 계획 수립.',
+      relationship: '신중한 태도로 사람을 대하면 신뢰 생김.'
+    }
+  },
+
+  '1/9': {
+    title: '발전과 변화',
+    description: '긍정적인 발전이 눈에 띄고, 자연스러운 변화도 함께 이루어지는 시기입니다. 주어진 흐름을 잘 살리면 큰 이득을 볼 수 있습니다.',
+    keyPoints: [
+      '발전적 변화가 점진적으로 진행',
+      '무리하지 않는 선에서 성과 창출',
+      '안정적 성장 기회'
+    ],
+    score: 75,
+    details: {
+      health: '전반적으로 건강하나, 유연성 운동 권장.',
+      wealth: '꾸준한 수입이 유지되며, 투자 타이밍 고려.',
+      relationship: '자연스럽게 교류가 늘어날 수 있음.'
+    }
+  },
+
+  '2/10': {
+    title: '기다림과 운명',
+    description: '오랫동안 기다려 온 무언가가 운명적으로 다가올 수 있습니다. 준비된 행동이 필요한 시점입니다.',
+    keyPoints: [
+      '기회가 다가올 때 순발력 요구',
+      '운명적인 계기(만남, 제안 등) 발생 가능',
+      '조급함 대신 준비된 태도로'
+    ],
+    score: 70,
+    details: {
+      health: '정신건강과 평정심 유지가 중요.',
+      wealth: '기회를 놓치지 않으면 재물운 상승도 기대.',
+      relationship: '운명적 만남 또는 계약 등이 있을 수 있음.'
+    }
+  },
+
+  '3/11': {
+    title: '풍요와 정의',
+    description: '물질적·정신적으로 풍요롭지만, 공정한 판단이 요구되는 시기입니다. 정의롭고 바른 태도가 결국 더 큰 이득을 줍니다.',
+    keyPoints: [
+      '물질적 풍요 + 정신적 충족',
+      '공정성, 정의를 지켜야 함',
+      '바른 태도가 장기적으로 유리'
+    ],
+    score: 85,
+    details: {
+      health: '건강이 호전되거나 체력이 강화될 수 있음.',
+      wealth: '정당한 이익이 보장되는 시기.',
+      relationship: '균형 잡힌 관계로 신뢰도 높아짐.'
+    }
+  },
+
+  '4/12': {
+    title: '결정과 희생',
+    description: '중요한 결정을 내리지만, 그만큼 인내나 희생이 뒤따르는 시기입니다. 쉽게 얻는 것은 없으니 신중히 판단하세요.',
+    keyPoints: [
+      '결정 이후 희생이나 부담이 커질 수 있음',
+      '인내심으로 극복 필요',
+      '고난 뒤에 성과 가능'
+    ],
+    score: 65,
+    details: {
+      health: '스트레스 요인이 많으니 관리 필수.',
+      wealth: '투자나 지출 시 특히 신중해야 함.',
+      relationship: '갈등이 생길 수 있으나 대화로 해결 가능.'
+    }
+  },
+
+  '5/13': {
+    title: '관계와 변화',
+    description: '인간관계에 큰 변화가 찾아오며, 과도기적 상황을 맞이할 수 있습니다. 유연하게 대처해나가는 능력이 필요합니다.',
+    keyPoints: [
+      '관계의 급격한 변화 (헤어짐 or 새 만남)',
+      '새로운 전환점, 재정비 필요',
+      '과도기에 느끼는 불안은 자연스러움'
+    ],
+    score: 60,
+    details: {
+      health: '정신적 스트레스가 클 수 있으니 관리 신경.',
+      wealth: '재정 변화 가능, 수입·지출 구조 점검.',
+      relationship: '관계의 전환기, 서로 다른 길을 가거나 새롭게 만나기도.'
+    }
+  },
+
+  '6/14': {
+    title: '인복과 조화',
+    description: '인복이 있으며, 주변과 조화를 이루며 성장하는 시기입니다. 함께 협력하고, 상생하는 분위기가 유리합니다.',
+    keyPoints: [
+      '인복 덕분에 협력 체계 구축 가능',
+      '균형잡힌 발전, 과도한 욕심은 경계',
+      '상생과 협력이 관건'
+    ],
+    score: 80,
+    details: {
+      health: '무리 없는 수준에서 활동적 라이프 가능.',
+      wealth: '안정적 수입이 예상, 과도한 지출은 지양.',
+      relationship: '조화로운 관계 맺기로 사람들 사이 신뢰↑.'
+    }
+  },
+
+  '7/15': {
+    title: '이동과 유혹',
+    description: '무언가를 바꾸거나 이동하려는 욕구가 강해집니다. 그러나 유혹도 함께 찾아올 수 있으니 신중한 판단이 필요합니다.',
+    keyPoints: [
+      '목적성 강화, 더 나은 환경 추구',
+      '유혹이 생길 수 있으므로 경계',
+      '신중하게 상황 파악'
+    ],
+    score: 70,
+    details: {
+      health: '중독이나 과도한 유희에 빠지지 않도록 주의.',
+      wealth: '지출 혹은 투자를 꼼꼼히 검토.',
+      relationship: '새로운 인연이 생길 수도 있으나, 갈등 요소도 있음.'
+    }
+  },
+
+  '8/16': {
+    title: '인내와 파괴',
+    description: '크게 인내해야 할 일이 생길 수 있고, 기존 시스템이나 구조가 무너질 수 있는 시기입니다. 재건을 염두에 둬야 합니다.',
+    keyPoints: [
+      '인내심이 절실히 요구됨',
+      '급격한 변화, 기존 틀이 깨질 수 있음',
+      '재건/재출발 준비'
+    ],
+    score: 50,
+    details: {
+      health: '사고나 부상, 극심한 피로주의.',
+      wealth: '재물 손실 또는 예기치 못한 지출.',
+      relationship: '어떤 관계가 단절될 수도, 미련을 버려야 할 수도 있음.'
+    }
+  },
+
+  '9/17': {
+    title: '변화와 희망',
+    description: '큰 변화가 일어나지만, 그 안에 희망적인 요소가 있습니다. 서서히 회복하며 새로운 도약의 기반을 마련할 수 있습니다.',
+    keyPoints: [
+      '자연스러운 변화 수용',
+      '새로운 희망 발견',
+      '긍정적 전환의 기회'
+    ],
+    score: 65,
+    details: {
+      health: '회복 기미가 보이며, 점진적으로 컨디션 상승.',
+      wealth: '점진적 회복, 과도한 욕심은 자제.',
+      relationship: '새로운 시작을 열 수 있는 인연이 나타날 수 있음.'
+    }
+  },
+
+  // ──────────────────────────────────────────
+  //  (추가) 0/9
+  // ──────────────────────────────────────────
+  '0/9': {
+    title: '새로운 흐름',
+    description: '주변 상황이 빠르게 변할 수 있으며, 이에 맞춰 자신도 재빠르게 적응해야 하는 시기입니다. 유연한 사고가 큰 힘이 됩니다.',
+    keyPoints: [
+      '급격히 변하는 환경',
+      '새로운 흐름에 올라타기',
+      '융통성·유연함이 승부처'
+    ],
+    score: 65,
+    details: {
+      health: '컨디션 조절이 중요, 과로주의.',
+      wealth: '지출이 예상외로 발생할 수 있으므로 계획 필요.',
+      relationship: '새로운 사람들과의 만남을 두려워하지 말 것.'
+    }
+  }
+};
+
+
+
+    /**********************************************************************
+     * 2) 기본 점수표 (first=0~9,10~17) / 조합 보너스 / ...
+     **********************************************************************/
+    const baseScores = {
+      0: { score: 60, weight: 1.0 },
+      1: { score: 70, weight: 1.1 },
+      2: { score: 55, weight: 0.9 },
+      3: { score: 80, weight: 1.2 },
+      4: { score: 75, weight: 1.1 },
+      5: { score: 65, weight: 1.0 },
+      6: { score: 70, weight: 1.1 },
+      7: { score: 75, weight: 1.2 },
+      8: { score: 60, weight: 0.9 },
+      9: { score: 65, weight: 1.0 },
+
+      10: { score: 70, weight: 1.0 },
+      11: { score: 75, weight: 1.1 },
+      12: { score: 55, weight: 0.8 },
+      13: { score: 50, weight: 0.7 },
+      14: { score: 65, weight: 0.9 },
+      15: { score: 45, weight: 0.6 },
+      16: { score: 40, weight: 0.5 },
+      17: { score: 60, weight: 0.8 }
+    };
+
+    // 특별 조합 (fv/sv) 보너스/페널티
+    const specialCombinations = {
+      '3/11': 10,
+      '7/14': 5,
+      '8/16': -15,
+      '9/17': -10,
+      '4/13': 8,
+      '6/14': 7,
+      '2/10': -5,
+      '5/15': -8,
+      '1/12': -3,
+      '0/16': -12
+    };
+
+    /**********************************************************************
+     * 3) 해운 점수 계산 함수
+     *    - "fv/sv" → baseScores + specialCombinations 로 최종 점수 결정
+     **********************************************************************/
+    function calculateHaeunScore(haeun, year) {
+      const [first, second] = haeun.split('/').map(Number);
+      if (!baseScores[first]) return 50; // 미등록이면 기본 50
+      // 1) base score
+      let score = baseScores[first].score;
+      // 2) 가중치
+      score *= baseScores[first].weight;
+      // 3) second(둘째 값) 효과: (예) second>8일 때 페널티 / 가중치
+      const secondEffect = Math.max(0.7, 1 - (second - 8) * 0.03);
+      score *= secondEffect;
+      // 4) 연도 가중치 (연도 끝자리)
+      const yearEffect = 1 + ((year % 10) * 0.02);
+      score *= yearEffect;
+      // 5) 특별 조합
+      if (specialCombinations[haeun]) {
+        score += specialCombinations[haeun];
+      }
+      // 범위 제한
+      return Math.max(0, Math.min(100, score));
+    }
+
+    /**********************************************************************
+     * 4) 해운 해석
+     *    - haeunInterpretations[haeun] + 점수대별 코멘트
+     **********************************************************************/
+    function getDetailedInterpretation(haeun, score) {
+      const base = haeunInterpretations[haeun] || {
+        title: '해석 없음',
+        description: '해당 해운에 대한 데이터가 없습니다.',
+        keyPoints: [],
+        details: {
+          health: '정보 없음',
+          wealth: '정보 없음',
+          relationship: '정보 없음'
+        }
+      };
+
+      let advice = '';
+      if (score >= 80) advice = '매우 좋은 시기입니다. 적극적으로 행동하세요.';
+      else if (score >= 60) advice = '긍정적인 흐름입니다. 차분히 진행해 보세요.';
+      else if (score >= 40) advice = '보통의 시기입니다. 신중하게 행동이 필요합니다.';
+      else advice = '주의가 필요한 시기입니다. 무리하지 마세요.';
+
+      return { ...base, advice };
+    }
+
+    /**********************************************************************
+     * 5) 10년 치 해운 계산
+     *    - 예: (startYear=2025), month, day
+     *    - fv = (month-1 + yearOffset) % 10
+     *    - sv = day + yearOffset
+     *    - 해운키 "fv/sv"
+     **********************************************************************/
+ function calculateTenYearsFortune(startYear, month, day) {
+    const results = [];
+    
+    for (let i = 0; i < 10; i++) {
+        const currentYear = startYear + i;
+        const haeunKey = calculateHaeun(currentYear, month, day);
+        
+        // 점수 계산
+        const score = calculateHaeunScore(haeunKey, currentYear);
+        // 해석
+        const interpretation = getDetailedInterpretation(haeunKey, score);
+        
+        results.push({
+            year: currentYear,
+            haeun: haeunKey,
+            score,
+            interpretation
+        });
+    }
+    
+    return results;
+}
+
+function calculateHaeun(year, month, day) {
+    // 기본 검증
+    if (year < 1900 || year > 2100) return null;
+    if (month < 1 || month > 12) return null;
+    if (day < 1 || day > 31) return null;
+
+    // 로직: year + month + day
+    const total = year + month + day;
+    
+    // 첫값: (total % 100)이 21 초과 → %10, 아니면 그대로
+    let lastTwo = total % 100;
+    let fv = (lastTwo > 21) ? (lastTwo % 10) : lastTwo;
+    
+    // 둘값: total의 각 자릿수 합
+    let sum = 0;
+    for (let c of String(total)) {
+        sum += parseInt(c, 10);
+    }
+    let sv = sum;
+    
+    return `${fv}/${sv}`;
+}
+
+    /**********************************************************************
+     * 6) 그래프(Chart.js) 표시
+     **********************************************************************/
+    function updateChart(data) {
+      const ctx = document.getElementById('fortuneChart').getContext('2d');
+      if (window.myChart) window.myChart.destroy();
+
+      const gradient = ctx.createLinearGradient(0, 0, 0, 400);
+      gradient.addColorStop(0, 'rgba(52, 152, 219, 0.3)');
+      gradient.addColorStop(1, 'rgba(52, 152, 219, 0)');
+
+      window.myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: data.map(item => item.year + '년'),
+          datasets: [{
+            label: '해운 점수',
+            data: data.map(item => item.score),
+            borderColor: '#3498db',
+            backgroundColor: gradient,
+            fill: true,
+            tension: 0.4,
+            pointRadius: 6,
+            pointHoverRadius: 8,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              backgroundColor: 'rgba(0, 0, 0, 0.8)',
+              padding: 12,
+              callbacks: {
+                label: (context) => {
+                  const item = data[context.dataIndex];
+                  return [
+                    `해운: ${item.haeun}`,
+                    `점수: ${Math.round(item.score)}점`,
+                    item.interpretation.title
+                  ];
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              ticks: {
+                callback: value => value + '점',
+                stepSize: 10
+              }
+            }
+          }
+        }
+      });
+    }
+
+    /**********************************************************************
+     * 7) 결과 카드 표시
+     **********************************************************************/
+   function updateResultGrid(data) {
+    const grid = document.getElementById('resultGrid');
+    grid.innerHTML = '';
+
+    data.forEach(item => {
+        const scoreClass = item.score >= 80 ? 'score-high' : 
+                         item.score >= 60 ? 'score-medium' : 'score-low';
+
+        const div = document.createElement('div');
+        div.className = 'result-item';
+        div.innerHTML = `
+            <div class="result-header">
+                <h3>${item.year}년 (해운: ${item.haeun})</h3>
+                <span class="score-badge ${scoreClass}">${Math.round(item.score)}점</span>
+            </div>
+            <div class="interpretation">
+                <h4>${item.interpretation.title}</h4>
+                <p>${item.interpretation.description}</p>
+                <ul class="key-points">
+                    ${item.interpretation.keyPoints.map(point => `
+                        <li>${point}</li>
+                    `).join('')}
+                </ul>
+                <div class="details-section">
+                    <div class="detail-item health">
+                        <strong>건강:</strong> ${item.interpretation.details.health}
+                    </div>
+                    <div class="detail-item wealth">
+                        <strong>재물:</strong> ${item.interpretation.details.wealth}
+                    </div>
+                    <div class="detail-item relationship">
+                        <strong>대인관계:</strong> ${item.interpretation.details.relationship}
+                    </div>
+                </div>
+                <div class="advice">
+                    <strong>조언:</strong> ${item.interpretation.advice}
+                </div>
+            </div>
+        `;
+        grid.appendChild(div);
+    });
+}
+
+    /**********************************************************************
+     * 8) 메인 실행 함수 (폼 onsubmit)
+     **********************************************************************/
+    function calculateFortune(event) {
+      event.preventDefault();
+
+      const year = 2025; // 2025년부터 시작
+      const month = parseInt(document.getElementById('month').value);
+      const day = parseInt(document.getElementById('day').value);
+
+      const error = document.getElementById('error');
+      error.textContent = '';
+
+      // 검증
+      if (!month || !day) {
+        error.textContent = '월과 일을 입력해주세요.';
+        return;
+      }
+      if (month < 1 || month > 12) {
+        error.textContent = '올바른 월을 입력해주세요 (1~12).';
+        return;
+      }
+      if (day < 1 || day > 31) {
+        error.textContent = '올바른 일을 입력해주세요 (1~31).';
+        return;
+      }
+
+      // 10년치 해운 계산
+      const results = calculateTenYearsFortune(year, month, day);
+
+      // 차트 & 결과 표시
+      updateChart(results);
+      updateResultGrid(results);
+    }
+  </script>
+
+<!-- container div 안에 맨 마지막에 추가 -->
+<div class="social-links">
+    <a href="https://niceple.com/" class="social-link-shop" target="_blank">
+        수비학 자사몰 방문하기
+    </a>
+    <a href="https://www.instagram.com/niceple_tarot/" class="social-link-instagram" target="_blank">
+        Instagram
+    </a>
+    <a href="https://pf.kakao.com/_Cgxcdn" class="social-link-kakao" target="_blank">
+        카카오톡 채널
+    </a>
+</div>
+</body>
+</html>
